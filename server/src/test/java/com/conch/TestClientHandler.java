@@ -9,7 +9,7 @@ import io.protostuff.ProtostuffIOUtil;
 import io.protostuff.Schema;
 import io.protostuff.runtime.RuntimeSchema;
 
-import com.conch.packet.request.LoginPacket;
+import com.cprp.packet.request.LoginPacket;
 
 public class TestClientHandler extends ChannelHandlerAdapter {
 	 

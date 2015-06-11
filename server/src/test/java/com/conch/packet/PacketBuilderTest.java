@@ -4,9 +4,10 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import com.conch.packet.request.BaseRequestPacket;
-import com.conch.packet.request.LoginPacket;
-import com.conch.packet.request.LogoutPacket;
+import com.cprp.packet.PacketBuilder;
+import com.cprp.packet.request.BaseRequestPacket;
+import com.cprp.packet.request.LoginPacket;
+import com.cprp.packet.request.LogoutPacket;
 
 public class PacketBuilderTest extends ProtobufTest {
 	

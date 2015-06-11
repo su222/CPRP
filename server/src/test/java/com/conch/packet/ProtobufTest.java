@@ -8,7 +8,7 @@ import io.protostuff.runtime.RuntimeSchema;
 
 import org.junit.Test;
 
-import com.conch.packet.request.LoginPacket;
+import com.cprp.packet.request.LoginPacket;
 
 public class ProtobufTest {
 
