@@ -4,7 +4,7 @@
 			<i class="fa fa-edit fa-fw "></i> 
 				관리자
 			<span>> 
-				품종관리
+				코드관리
 			</span>
 		</h1>
 	</div>
@@ -15,17 +15,126 @@
 
 	<div class="row">
 		<!-- NEW COL START -->
-		<article class="col-sm-12 col-md-12 col-lg-6">
+		<article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 			<!-- Widget ID (each widget will need unique ID)-->
-			<div class="jarviswidget" data-widget-colorbutton="false" data-widget-editbutton="false" data-widget-custombutton="false">
+			<div class="jarviswidget jarviswidget-color-darken" id="widget_codeList" data-widget-editbutton="false">
+				<!-- widget options:
+				usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
+
+				data-widget-colorbutton="false"
+				data-widget-editbutton="false"
+				data-widget-togglebutton="false"
+				data-widget-deletebutton="false"
+				data-widget-fullscreenbutton="false"
+				data-widget-custombutton="false"
+				data-widget-collapsed="true"
+				data-widget-sortable="false"
+
+				-->
 				<header>
-					<span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-					<h2>품종정보</h2>
+					<span class="widget-icon"> <i class="fa fa-table"></i> </span>
+					<h2>코드목록</h2>
 				</header>
+
+				<!-- widget div-->
+				<div>
+
+					<!-- widget edit box -->
+					<div class="jarviswidget-editbox">
+						<!-- This area used as dropdown edit box -->
+
+					</div>
+					<!-- end widget edit box -->
+
+					<!-- widget content -->
+					<div class="widget-body no-padding">
+
+						<table id="dt_MasterCodeList" class="table table-striped table-bordered table-hover" width="100%">
+							<thead>
+								<tr>
+									<th>ID</th>
+									<th><i class="fa fa-fw text-muted hidden-md hidden-sm hidden-xs"></i> 품종코드</th>
+									<th><i class="fa fa-fw text-muted hidden-md hidden-sm hidden-xs"></i> 품종명</th>
+									<th>설명</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<!-- end widget content -->
+
+				</div>
+				<!-- end widget div -->
+
 			</div>
+			<!-- end widget -->
 		</article>
 	</div>
 
+	<div class="row">
+		<!-- NEW COL START -->
+		<article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+			<!-- Widget ID (each widget will need unique ID)-->
+			<div class="jarviswidget jarviswidget-color-darken" id="widget_codeList" data-widget-editbutton="false">
+				<!-- widget options:
+				usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
+
+				data-widget-colorbutton="false"
+				data-widget-editbutton="false"
+				data-widget-togglebutton="false"
+				data-widget-deletebutton="false"
+				data-widget-fullscreenbutton="false"
+				data-widget-custombutton="false"
+				data-widget-collapsed="true"
+				data-widget-sortable="false"
+
+				-->
+				<header>
+					<span class="widget-icon"> <i class="fa fa-table"></i> </span>
+					<h2>서브코드목록</h2>
+				</header>
+
+				<!-- widget div-->
+				<div>
+
+					<!-- widget edit box -->
+					<div class="jarviswidget-editbox">
+						<!-- This area used as dropdown edit box -->
+
+					</div>
+					<!-- end widget edit box -->
+
+					<!-- widget content -->
+					<div class="widget-body no-padding">
+
+						<table id="dt_SubCodeList" class="table table-striped table-bordered table-hover" width="100%">
+							<thead>
+								<tr>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<!-- end widget content -->
+
+				</div>
+				<!-- end widget div -->
+
+			</div>
+			<!-- end widget -->
+		</article>
+	</div>
+	
 	<!-- START ROW -->
 	<div class="row">
 
@@ -1415,12 +1524,48 @@
 	// pagefunction
 	
 	var pagefunction = function() {
-		
+		$.post('/admin/searchMasterCode', function(result) {
+			$('#dt_MasterCodeList').dataTable({
+				data : result,
+				columns : [
+					{data : 'seq'},
+					{data : 'code'},
+					{data : 'name'},
+					{data : 'description'}
+				]
+			});
+			if (result && result.length > 0) {
+				var keys = Object.keys(result[0]);
+				var header = '';
+				var body = '';
+				for (i in keys) {
+					header += '<th>' + keys[i] + '</th>';
+					body += '<td></td>';
+				} 
+				$('#dt_SubCodeList > thead > tr').html(header);
+				$('#dt_SubCodeList > tbody > tr').html(header);
+			}
+				
+			$('#dt_SubCodeList').dataTable({
+				data : result,
+				columns : [
+							{data : 'seq'},
+							{data : 'code'},
+							{data : 'name'},
+							{data : 'description'}
+						]
+			});
+		});
 	};
 	
 	// end pagefunction
 	
 	// run pagefunction on load
-	pagefunction();
-
+	loadScript("js/plugin/datatables/jquery.dataTables.min.js", function(){
+		loadScript("js/plugin/datatables/dataTables.colVis.min.js", function(){
+			loadScript("js/plugin/datatables/dataTables.tableTools.min.js", function(){
+				loadScript("js/plugin/datatables/dataTables.bootstrap.min.js", pagefunction);
+			});
+		});
+	});
 </script>
